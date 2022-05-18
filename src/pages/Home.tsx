@@ -26,7 +26,7 @@ export function Home() {
             id: String(new Date().getTime()),
             name: newSkill
         }
- 
+
         setMySkills(oldState => [...oldState, data]);
     }
 
@@ -61,7 +61,10 @@ export function Home() {
                 placeholderTextColor="#555"
                 onChangeText={setNewSkill}
             />
-            <Button onPress={handleAddNewSkill} />
+            <Button
+                onPress={handleAddNewSkill}
+                title= "Add"
+            />
 
 
             <Text style={[styles.title, { marginVertical: 50 }]}>
