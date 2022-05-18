@@ -4,6 +4,7 @@ import {
     Text,
     StyleSheet,
     TextInput,
+    Platform,
     FlatList,
 } from "react-native";
 
@@ -13,7 +14,6 @@ import { SkillCard } from "../components/SkillCard";
 interface SkillData {
     id: string;
     name: string;
-    date?: Date;
 }
 
 export function Home() {
@@ -28,6 +28,12 @@ export function Home() {
         }
 
         setMySkills(oldState => [...oldState, data]);
+    }
+
+    function handleRemoveSkill(id: string) {
+        setMySkills(oldstate => oldstate.filter(
+            skill => skill.id !== id
+        ));
     }
 
     useEffect(() => {
@@ -63,7 +69,7 @@ export function Home() {
             />
             <Button
                 onPress={handleAddNewSkill}
-                title= "Add"
+                title="Add"
             />
 
 
@@ -75,7 +81,10 @@ export function Home() {
                 data={mySkills}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
-                    <SkillCard skill={item.name} />
+                    <SkillCard
+                        skill={item.name}
+                        onPress={() => handleRemoveSkill(item.id)}
+                    />
                 )}
             />
 
@@ -87,9 +96,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#121015",
-        paddingHorizontal: 20,
         paddingVertical: 70,
-        paddinghorizontal: 30
+        paddingHorizontal: 30
     },
     title: {
         color: "#FFF",
@@ -100,7 +108,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#1F1E25",
         color: "#FFF",
         fontSize: 18,
-        padding: Platform.OS === "ios" ? 15 : 10,
+        //padding: Platform.OS === "ios" ? 15 : 10,
         marginTop: 30,
         borderRadius: 7,
     },
